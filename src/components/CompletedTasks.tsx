@@ -1,11 +1,12 @@
-import deletePNG from "./assets/delete.png";
+import deletePNG from "../assets/delete.png";
 import { Col, Stack, Card, Form, Button } from "react-bootstrap";
 
 // type for completedTask object in completedTaskArray
 type Task = {
   id: number,
   task: string,
-  completed: boolean
+  completed: boolean,
+  important: boolean
 }
 // giving my prop deleteCompletedTask and completedTaskArray their respective type
 type Props = {
@@ -28,9 +29,9 @@ export default function CompletedTasks({
   markIncomplete
 }: Props) {
   return (
-    <Col md className="vh-100" style={{ backgroundColor: bgColor }}>
+    <Col md className="" style={{ backgroundColor: bgColor }}>
         <h4 className="display-5 text-center my-5 text-light">Completed Tasks:</h4>
-        <Stack gap={3}>
+        <Stack className="mb-5" gap={3}>
         {taskArray.map((task, index) => (
           <Card
             key={index}
@@ -46,7 +47,7 @@ export default function CompletedTasks({
                 <Form.Check
                   style={{ color: textColor }}
                   type="checkbox"
-                  label={ <span className="text-decoration-line-through">{task.task}</span> }
+                  label={<span className="text-decoration-line-through">{task.task}</span>}
                   onChange={ () => markIncomplete(task.id) }
                   checked={task.completed}
                 />
@@ -55,7 +56,7 @@ export default function CompletedTasks({
                 variant="outline-light"
                 onClick={() => deleteTask(task.id)} // Pass the index to deleteTask
               >
-                <img src={ deletePNG } alt="Delete" />
+                <img src={deletePNG} alt="Delete" />
               </Button>
             </Stack>
           </Card.Body>

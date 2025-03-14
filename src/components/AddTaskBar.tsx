@@ -1,17 +1,18 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
-import addPNG from "./assets/more.png"
+import addPNG from "../assets/more.png"
 import { Container, Form, InputGroup, Button } from "react-bootstrap";
 
 // adding type for addTask function
 type Props = {
-    addTask: (task: { task: string, completed: boolean }) => void;
+    addTask: (task: { task: string, completed: boolean, important:boolean }) => void;
 };
 
 // updated taskbar button to be a plus icon
 export default function AddTaskBar({addTask}: Props) {
   const [formValues, setFormValues] = useState({ 
     task: '', 
-    completed: false
+    completed: false,
+    important: false
   })
   const handleChange = (event: ChangeEvent<HTMLInputElement>)  => setFormValues({
     ...formValues,
@@ -35,9 +36,9 @@ export default function AddTaskBar({addTask}: Props) {
             />
             <Button 
                 variant="secondary" 
-                onClick={ handleSubmit }
+                onClick={handleSubmit}
             >
-                <img src={ addPNG } alt="add" />
+                <img src={addPNG} alt="add" />
             </Button>
           </InputGroup>
       </Container>

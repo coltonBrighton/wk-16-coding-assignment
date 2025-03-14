@@ -11,7 +11,7 @@ type EditFormProps = {
 };
 
 export default function EditForm({ show, onHide, task, onSave }: EditFormProps) {
-  const [taskText, setTaskText] = useState(task.task);
+  const [taskText, setTaskText] = useState(task.task); // using state for task text
 
   // Update task text when the task prop changes
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function EditForm({ show, onHide, task, onSave }: EditFormProps) 
         <Button variant="secondary" onClick={onHide}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="success" onClick={handleSave}>
           Save Changes
         </Button>
       </Modal.Footer>

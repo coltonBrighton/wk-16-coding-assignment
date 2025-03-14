@@ -1,29 +1,27 @@
 import { useState } from "react";
-import deletePNG from "./assets/delete.png";
-import editPNG from "./assets/edit.png";
-import { Col, Stack, Card, Form, Button} from "react-bootstrap"
+import { Col, Stack, Card, Form, } from "react-bootstrap"
 import EditForm from "./EditForm";
+import TaskButtons from "./TaskButtons";
 
-// type for taskArray task objects
 type Task = {
   id: number,
   task: string
   completed: boolean
+  important: boolean
 }
-// giving my props addTask, deleteTask, editTask, and MarkComplete their respective types
+
 type Props = {
   textColor: string;
   newWidth: number;
   bgColor: string;
   taskArray: Task[];
-  addTask: (task: { id: number, task: string, completed: boolean }) => void;
+  addTask: (task: { id: number, task: string, completed: boolean, important: boolean }) => void;
   deleteTask: (taskId: number) => void;
   editTask: (taskId: number, updatedTask: string) => void;
   markComplete: (taskId: number) => void;
+  markImportant: (taskId: number) => void;
 };
 
-// use destructuring to grab deleteTask, editTask, taskArray, and markComplete then set their type to Props
-// added edit and delete buttons
 export default function TasksToDo({
   textColor,
   newWidth,
@@ -31,10 +29,11 @@ export default function TasksToDo({
   deleteTask,
   taskArray,
   editTask,
-  markComplete
+  markComplete,
+  markImportant
 }: Props) {
-  const [modalShow, setModalShow] = useState(false)
-  const [currentTask, setCurrentTask] = useState<Task | null>(null);
+  const [modalShow, setModalShow] = useState(false) // Use state for modal
+  const [currentTask, setCurrentTask] = useState<Task | null>(null); // use state for the task selsected
 
   const handleEditTask = (task: Task) => {
     setCurrentTask(task);  // Set the task to edit
@@ -65,18 +64,12 @@ export default function TasksToDo({
                   checked={task.completed}
                 />
               </Form>
-              <Button 
-                variant="outline-light"
-                onClick={() => handleEditTask(task)}
-                >
-                <img src={editPNG} alt="Edit" />
-              </Button>
-              <Button 
-                variant="outline-light"
-                onClick={() => deleteTask(task.id)} // Pass the index to deleteTask
-              >
-                <img src={ deletePNG } alt="Delete" />
-              </Button>
+              <TaskButtons 
+                task={task} 
+                deleteTask={deleteTask} 
+                handleEditTask={handleEditTask}
+                markImportant={markImportant}
+              />
             </Stack>
           </Card.Body>
         </Card>
